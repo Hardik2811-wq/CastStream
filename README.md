@@ -2,7 +2,10 @@
 
 > **Real-Time Synchronized Media Player, Live Physics Reactions & Community Telemetry**  
 > **Evaluation Category:** Social Media / High-Concurrency Interactive Entertainment  
-> **Submission Deadline:** 27 October 2026, 11:59 PM IST
+> **Submission Deadline:** 27 October 2026, 11:59 PM IST  
+
+[![Demo Video](https://img.shields.io/badge/Demo%20Video-Google%20Drive-E50914?style=for-the-badge&logo=googledrive&logoColor=white)](https://drive.google.com/file/d/1j_DxSLEF3EY4LwbMWdoTJc951JhfUPVx/view?usp=sharing)
+[![Repository Video](https://img.shields.io/badge/Direct%20Video-MP4%20Stream-8B5CF6?style=for-the-badge&logo=video&logoColor=white)](./EndTermVideo.mp4)
 
 ---
 
@@ -170,8 +173,9 @@ Open your browser to:
 
 - [x] **Working Software Application:** Real-time synchronized streaming with canvas physics and socket telemetry.
 - [x] **Source Code on GitHub:** [https://github.com/Hardik2811-wq/CastStream](https://github.com/Hardik2811-wq/CastStream)
+- [x] **Demo Video (Google Drive):** [https://drive.google.com/file/d/1j_DxSLEF3EY4LwbMWdoTJc951JhfUPVx/view?usp=sharing](https://drive.google.com/file/d/1j_DxSLEF3EY4LwbMWdoTJc951JhfUPVx/view?usp=sharing)
+- [x] **Demo Video (Direct MP4 in Repo):** [EndTermVideo.mp4](./EndTermVideo.mp4)
 - [x] **Clean Security Practices:** HTTP-Only JWT cookies, bcrypt password hashing, `.env` excluded from git.
-- [x] **Demo Video Script:** Step-by-step walkthrough covering Signup, 4K Sync, Reactions, Polls, and Queue.
 - [x] **Submission Form Ready:** [https://forms.gle/sBy4sfqyiRG2Zpom9](https://forms.gle/sBy4sfqyiRG2Zpom9)
 
 ---
