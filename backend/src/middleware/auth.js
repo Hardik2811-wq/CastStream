@@ -7,8 +7,7 @@ export const JWT_SECRET = process.env.JWT_SECRET || 'caststream_secret_jwt_2026'
  * Enforce valid JWT Bearer token
  */
 export async function authenticateToken(req, res, next) {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+  const token = req.cookies?.token || (req.headers['authorization'] && req.headers['authorization'].split(' ')[1]);
 
   if (!token) {
     return res.status(401).json({ error: 'Authentication token required' });
@@ -31,8 +30,7 @@ export async function authenticateToken(req, res, next) {
  * Optional authentication: attaches user if token exists, otherwise assigns guest identity
  */
 export async function optionalAuth(req, res, next) {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+  const token = req.cookies?.token || (req.headers['authorization'] && req.headers['authorization'].split(' ')[1]);
 
   if (!token) {
     req.user = {

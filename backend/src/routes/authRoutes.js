@@ -5,6 +5,13 @@ import { authenticateToken, JWT_SECRET } from '../middleware/auth.js';
 
 const router = express.Router();
 
+const COOKIE_OPTIONS = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: 'lax',
+  maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+};
+
 function buildUserPayload(user) {
   return {
     id: user._id,
@@ -53,6 +60,8 @@ router.post('/register', async (req, res) => {
       { expiresIn: '30d' }
     );
 
+    res.cookie('token', token, COOKIE_OPTIONS);
+
     res.status(201).json({
       token,
       user: buildUserPayload(user),
@@ -89,6 +98,8 @@ router.post('/login', async (req, res) => {
       { expiresIn: '30d' }
     );
 
+    res.cookie('token', token, COOKIE_OPTIONS);
+
     res.json({
       token,
       user: buildUserPayload(user),
@@ -98,37 +109,14 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// 3. Instant 1-Click Guest / Demo Session Login
-router.post('/guest', async (req, res) => {
-  try {
-    const randomSuffix = Math.floor(100 + Math.random() * 900);
-    const guestUsername = req.body.username || `Streamer_${randomSuffix}`;
-
-    let user = await User.findOne({ username: guestUsername });
-    if (!user) {
-      user = await User.create({
-        username: guestUsername,
-        email: `${guestUsername.toLowerCase()}@caststream.live`,
-        password: 'demo_password_123',
-        badge: req.body.badge || 'MEMBER',
-        role: 'user',
-        avatar: `https://api.dicebear.com/7.x/bottts/svg?seed=${guestUsername}`,
-      });
-    }
-
-    const token = jwt.sign(
-      { id: user._id, username: user.username, role: user.role, badge: user.badge },
-      JWT_SECRET,
-      { expiresIn: '7d' }
-    );
-
-    res.json({
-      token,
-      user: buildUserPayload(user),
-    });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+// 3. Logout (Clear Cookie)
+router.post('/logout', (req, res) => {
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+  });
+  res.json({ success: true, message: 'Logged out successfully' });
 });
 
 // 4. Get Current User Profile

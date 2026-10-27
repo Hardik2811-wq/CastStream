@@ -23,6 +23,7 @@ export function WatchPartyProvider({ children }) {
   const [viewerCount, setViewerCount] = useState(94);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('caststream_token') || '');
+  const [authLoading, setAuthLoading] = useState(true);
   const [mediaPresets, setMediaPresets] = useState([]);
   const [presetModalOpen, setPresetModalOpen] = useState(false);
   const [roomModalOpen, setRoomModalOpen] = useState(false);
@@ -70,32 +71,43 @@ export function WatchPartyProvider({ children }) {
     }
   }, [viewMode, currentRoom?.name]);
 
-  // 1. Initial User Authentication (Real User Token Check - No Auto Dummy Login)
+  // 1. Initial User Authentication (Cookie + JWT Verification)
   useEffect(() => {
     async function initAuth() {
-      if (!token) {
-        setUser(null);
-        return;
-      }
       try {
+        const headers = {};
+        const localToken = localStorage.getItem('caststream_token');
+        if (localToken) headers['Authorization'] = `Bearer ${localToken}`;
+
         const res = await fetch('/api/auth/me', {
-          headers: { Authorization: `Bearer ${token}` },
+          credentials: 'include',
+          headers,
         });
         if (res.ok) {
           const data = await res.json();
-          if (data.user) setUser(data.user);
+          if (data?.user) {
+            setUser(data.user);
+          } else {
+            setUser(null);
+            setToken('');
+            localStorage.removeItem('caststream_token');
+          }
         } else {
-          // Token is expired or invalid
-          setToken('');
           setUser(null);
+          setToken('');
           localStorage.removeItem('caststream_token');
         }
       } catch (err) {
         console.error('Auth verification error:', err);
+        setUser(null);
+        setToken('');
+        localStorage.removeItem('caststream_token');
+      } finally {
+        setAuthLoading(false);
       }
     }
     initAuth();
-  }, [token]);
+  }, []);
 
   // 2. Fetch Rooms & Media Presets
   useEffect(() => {
@@ -431,6 +443,7 @@ export function WatchPartyProvider({ children }) {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ username, password }),
       });
       const data = await res.json();
@@ -457,6 +470,7 @@ export function WatchPartyProvider({ children }) {
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ username, email, password, badge }),
       });
       const data = await res.json();
@@ -478,17 +492,26 @@ export function WatchPartyProvider({ children }) {
     }
   }
 
-  function logout() {
+  async function logout() {
+    try {
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+      });
+    } catch (err) {
+      console.error('Logout error:', err);
+    }
     setToken('');
     setUser(null);
     localStorage.removeItem('caststream_token');
     sounds.playTap();
-    navigate('/login');
+    navigate('/signup');
   }
 
   return (
     <WatchPartyContext.Provider
       value={{
+        authLoading,
         socket,
         viewMode,
         setViewMode: handleSetViewMode,

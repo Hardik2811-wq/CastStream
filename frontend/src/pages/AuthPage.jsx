@@ -93,13 +93,29 @@ export default function AuthPage({ initialMode = 'login' }) {
           </span>
         </Link>
 
-        <Link
-          to="/"
-          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white font-mono text-xs transition-colors"
-        >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>Browse Home</span>
-        </Link>
+        {mode === 'signup' ? (
+          <button
+            type="button"
+            onClick={() => {
+              setMode('login');
+              setErrorMsg('');
+            }}
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white font-mono text-xs transition-colors cursor-pointer"
+          >
+            <span>Have an account? <strong className="text-white underline">Sign In</strong></span>
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={() => {
+              setMode('signup');
+              setErrorMsg('');
+            }}
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white font-mono text-xs transition-colors cursor-pointer"
+          >
+            <span>New user? <strong className="text-[#E50914] underline">Create Account</strong></span>
+          </button>
+        )}
       </header>
 
       {/* Center Auth Card */}
