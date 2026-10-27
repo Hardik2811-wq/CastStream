@@ -52,6 +52,15 @@ app.use(morgan('dev'));
 app.use('/api/auth', authRoutes);
 app.use('/api/rooms', roomRoutes);
 
+// Production Static Serving for Frontend Single-Deployment
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const distPath = path.join(__dirname, '../../frontend/dist');
+
+app.use(express.static(distPath));
+
 // Health & Sync Diagnostics Endpoint
 app.get('/health', (req, res) => {
   res.json({
@@ -64,10 +73,9 @@ app.get('/health', (req, res) => {
   });
 });
 
-// 404 Route Handler
-app.use((req, res, next) => {
-  if (req.path === '/health') return next();
-  res.status(404).json({ error: `Route ${req.method} ${req.url} not found on CastStream API` });
+// Client SPA fallback
+app.get('*', (req, res) => {
+  res.sendFile(path.join(distPath, 'index.html'));
 });
 
 // Global Centralized Error Handler

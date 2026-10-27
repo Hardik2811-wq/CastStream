@@ -4,6 +4,8 @@
   "description": "CastStream — Interactive Watch-Party Platform with Synchronized Media & Live Reactions",
   "scripts": {
     "install:all": "npm --prefix backend install && npm --prefix frontend install",
+    "build": "npm --prefix frontend install && npm --prefix frontend run build && npm --prefix backend install",
+    "start": "node backend/src/server.js",
     "test:backend": "npm --prefix backend test",
     "build:frontend": "npm --prefix frontend run build",
     "start:backend": "npm --prefix backend start",
