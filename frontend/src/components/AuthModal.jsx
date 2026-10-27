@@ -17,10 +17,10 @@ import {
 import { sounds } from '../utils/audio';
 
 const BADGE_OPTIONS = [
-  { id: 'HOST', label: 'HOST', desc: 'Playback & Poll Controls', icon: Crown, color: 'text-[#E50914]' },
+  { id: 'HOST', label: 'HOST', desc: 'Master Clock & Controls', icon: Crown, color: 'text-[#E50914]' },
   { id: 'DJ', label: 'DJ', desc: 'Queue & Audio Curator', icon: Disc, color: 'text-purple-400' },
-  { id: 'VIP', label: 'VIP', desc: 'Highlighted Chat Patron', icon: Star, color: 'text-amber-400' },
-  { id: 'MEMBER', label: 'MEMBER', desc: 'Audience Reactor', icon: Zap, color: 'text-cyan-400' },
+  { id: 'VIP', label: 'VIP', desc: 'Verified Cinema Patron', icon: Star, color: 'text-amber-400' },
+  { id: 'MEMBER', label: 'MEMBER', desc: 'Interactive Reactor', icon: Zap, color: 'text-cyan-400' },
 ];
 
 export default function AuthModal() {
@@ -207,31 +207,31 @@ export default function AuthModal() {
             {authMode === 'login' ? (
               <form onSubmit={handleLogin} className="flex flex-col gap-3 font-sans">
                 <div className="flex flex-col gap-1 text-xs">
-                  <label className="text-slate-400 font-mono text-[11px]">Username or Email</label>
+                  <label className="text-slate-300 font-medium text-xs">Username or Email</label>
                   <div className="relative flex items-center">
-                    <UserIcon className="w-4 h-4 text-slate-500 absolute left-3 pointer-events-none" />
+                    <UserIcon className="w-4 h-4 text-slate-500 absolute left-3.5 pointer-events-none" />
                     <input
                       type="text"
                       required
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
-                      placeholder="Enter username or email"
-                      className="w-full bg-[#030610] border border-white/10 focus:border-[#E50914] rounded-xl pl-9 pr-4 py-2.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-[#E50914] font-mono"
+                      placeholder="username or email"
+                      className="w-full bg-[#030610] border border-white/10 hover:border-white/20 focus:border-[#E50914] focus:ring-1 focus:ring-[#E50914] rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-slate-600 outline-none transition-all"
                     />
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-1 text-xs">
-                  <label className="text-slate-400 font-mono text-[11px]">Password</label>
+                  <label className="text-slate-300 font-medium text-xs">Password</label>
                   <div className="relative flex items-center">
-                    <Lock className="w-4 h-4 text-slate-500 absolute left-3 pointer-events-none" />
+                    <Lock className="w-4 h-4 text-slate-500 absolute left-3.5 pointer-events-none" />
                     <input
                       type="password"
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full bg-[#030610] border border-white/10 focus:border-[#E50914] rounded-xl pl-9 pr-4 py-2.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-[#E50914] font-mono"
+                      className="w-full bg-[#030610] border border-white/10 hover:border-white/20 focus:border-[#E50914] focus:ring-1 focus:ring-[#E50914] rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-slate-600 outline-none transition-all"
                     />
                   </div>
                 </div>
@@ -239,7 +239,7 @@ export default function AuthModal() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="mt-2 w-full py-3 rounded-xl bg-gradient-to-r from-[#E50914] to-red-700 hover:from-red-600 hover:to-red-800 text-white font-bold font-mono text-xs uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(229,9,20,0.4)] cursor-pointer active:scale-[0.99] disabled:opacity-50"
+                  className="mt-2 w-full py-3 rounded-xl bg-gradient-to-r from-[#E50914] via-[#F40612] to-[#B80710] hover:from-red-600 hover:to-red-800 text-white font-bold font-sans text-xs tracking-wide transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_8px_25px_rgba(229,9,20,0.4)] cursor-pointer active:scale-[0.99] disabled:opacity-50"
                 >
                   {loading ? 'Authenticating...' : 'Sign In to Theater'}
                 </button>
@@ -248,39 +248,39 @@ export default function AuthModal() {
               /* Sign Up Form */
               <form onSubmit={handleRegister} className="flex flex-col gap-3 font-sans">
                 <div className="flex flex-col gap-1 text-xs">
-                  <label className="text-slate-400 font-mono text-[11px]">Choose Username</label>
+                  <label className="text-slate-300 font-medium text-xs">Streamer Username</label>
                   <div className="relative flex items-center">
-                    <UserIcon className="w-4 h-4 text-slate-500 absolute left-3 pointer-events-none" />
+                    <UserIcon className="w-4 h-4 text-slate-500 absolute left-3.5 pointer-events-none" />
                     <input
                       type="text"
                       required
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
-                      placeholder="e.g. your_name"
-                      className="w-full bg-[#030610] border border-white/10 focus:border-[#E50914] rounded-xl pl-9 pr-4 py-2.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-[#E50914] font-mono"
+                      placeholder="your_streamer_handle"
+                      className="w-full bg-[#030610] border border-white/10 hover:border-white/20 focus:border-[#E50914] focus:ring-1 focus:ring-[#E50914] rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-slate-600 outline-none transition-all"
                     />
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-1 text-xs">
-                  <label className="text-slate-400 font-mono text-[11px]">Email Address</label>
+                  <label className="text-slate-300 font-medium text-xs">Email Address</label>
                   <div className="relative flex items-center">
-                    <Mail className="w-4 h-4 text-slate-500 absolute left-3 pointer-events-none" />
+                    <Mail className="w-4 h-4 text-slate-500 absolute left-3.5 pointer-events-none" />
                     <input
                       type="email"
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="name@example.com"
-                      className="w-full bg-[#030610] border border-white/10 focus:border-[#E50914] rounded-xl pl-9 pr-4 py-2.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-[#E50914] font-mono"
+                      placeholder="streamer@caststream.io"
+                      className="w-full bg-[#030610] border border-white/10 hover:border-white/20 focus:border-[#E50914] focus:ring-1 focus:ring-[#E50914] rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-slate-600 outline-none transition-all"
                     />
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-1 text-xs">
-                  <label className="text-slate-400 font-mono text-[11px]">Password (min 6 chars)</label>
+                  <label className="text-slate-300 font-medium text-xs">Password (min 6 chars)</label>
                   <div className="relative flex items-center">
-                    <Lock className="w-4 h-4 text-slate-500 absolute left-3 pointer-events-none" />
+                    <Lock className="w-4 h-4 text-slate-500 absolute left-3.5 pointer-events-none" />
                     <input
                       type="password"
                       required
@@ -288,15 +288,15 @@ export default function AuthModal() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full bg-[#030610] border border-white/10 focus:border-[#E50914] rounded-xl pl-9 pr-4 py-2.5 text-xs text-white placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-[#E50914] font-mono"
+                      className="w-full bg-[#030610] border border-white/10 hover:border-white/20 focus:border-[#E50914] focus:ring-1 focus:ring-[#E50914] rounded-xl pl-10 pr-4 py-2.5 text-xs text-white placeholder-slate-600 outline-none transition-all"
                     />
                   </div>
                 </div>
 
                 {/* Streamer Role Badge Picker */}
-                <div className="flex flex-col gap-1 mt-1">
-                  <label className="text-slate-400 font-mono text-[11px]">
-                    Select Streamer Role & Badge:
+                <div className="flex flex-col gap-1.5 mt-1">
+                  <label className="text-slate-300 font-medium text-xs">
+                    Streamer Persona Badge
                   </label>
                   <div className="grid grid-cols-2 gap-2">
                     {BADGE_OPTIONS.map((b) => {
@@ -327,9 +327,9 @@ export default function AuthModal() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="mt-2 w-full py-3 rounded-xl bg-gradient-to-r from-[#E50914] to-red-700 hover:from-red-600 hover:to-red-800 text-white font-bold font-mono text-xs uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(229,9,20,0.4)] cursor-pointer active:scale-[0.99] disabled:opacity-50"
+                  className="mt-2 w-full py-3 rounded-xl bg-gradient-to-r from-[#E50914] via-[#F40612] to-[#B80710] hover:from-red-600 hover:to-red-800 text-white font-bold font-sans text-xs tracking-wide transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_8px_25px_rgba(229,9,20,0.4)] cursor-pointer active:scale-[0.99] disabled:opacity-50"
                 >
-                  {loading ? 'Creating Account...' : 'Create Account & Enter'}
+                  {loading ? 'Creating Persona...' : 'Create Persona & Enter'}
                 </button>
               </form>
             )}
