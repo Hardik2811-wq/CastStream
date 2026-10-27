@@ -1,0 +1,12 @@
+{
+  "name": "caststream-watchparty",
+  "version": "1.0.0",
+  "description": "CastStream — Interactive Watch-Party Platform with Synchronized Media & Live Reactions",
+  "scripts": {
+    "install:all": "npm --prefix backend install && npm --prefix frontend install",
+    "test:backend": "npm --prefix backend test",
+    "build:frontend": "npm --prefix frontend run build",
+    "start:backend": "npm --prefix backend start",
+    "start:frontend": "npm --prefix frontend run dev"
+  }
+}
